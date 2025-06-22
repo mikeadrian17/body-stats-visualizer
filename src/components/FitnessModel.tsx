@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from 'react';
 
 interface FitnessStats {
@@ -246,10 +245,10 @@ export const FitnessModel = () => {
     // Get muscle group color based on stats
     const getMuscleColor = (muscleGroup: keyof FitnessStats) => {
       const percentage = stats[muscleGroup];
-      if (percentage >= 85) return '#00ff00';
-      if (percentage >= 70) return '#ffff00';
-      if (percentage >= 50) return '#ff8800';
-      return '#ff0000';
+      if (percentage >= 85) return '#f97316'; // orange-500
+      if (percentage >= 70) return '#fb923c'; // orange-400
+      if (percentage >= 50) return '#fdba74'; // orange-300
+      return '#fed7aa'; // orange-200
     };
 
     const animate = () => {
@@ -363,26 +362,26 @@ export const FitnessModel = () => {
   }, [stats]);
 
   return (
-    <div className="relative h-full w-full bg-gradient-to-b from-gray-900 to-gray-800">
+    <div className="relative h-full w-full bg-gradient-to-b from-slate-900 to-slate-950">
       <canvas 
         ref={canvasRef}
         className="w-full h-full cursor-grab active:cursor-grabbing"
       />
-      <div className="absolute bottom-4 left-4 text-xs text-gray-400">
+      <div className="absolute bottom-4 left-4 text-xs text-orange-200/60">
         <p>Drag to rotate 360° • Scroll to zoom • Colors show performance</p>
       </div>
-      <div className="absolute top-4 right-4 text-xs text-gray-400">
+      <div className="absolute top-4 right-4 text-xs text-orange-200/60">
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-green-500 rounded"></div>
+            <div className="w-3 h-3 bg-orange-500 rounded"></div>
             <span>85%+ Performance</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-yellow-500 rounded"></div>
+            <div className="w-3 h-3 bg-orange-400 rounded"></div>
             <span>70%+ Performance</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-orange-500 rounded"></div>
+            <div className="w-3 h-3 bg-orange-300 rounded"></div>
             <span>50%+ Performance</span>
           </div>
         </div>

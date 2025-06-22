@@ -4,14 +4,14 @@ import { StatsPanel } from "../components/StatsPanel";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-black text-orange-100">
       {/* Header */}
-      <header className="px-6 py-4 border-b border-gray-700/50 backdrop-blur-sm bg-gray-900/50">
+      <header className="px-6 py-4 border-b border-orange-500/20 backdrop-blur-sm bg-slate-950/80">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-            Fitness Dashboard
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
+            Fitness Command Center
           </h1>
-          <p className="text-gray-400 mt-1">Track your progress and visualize your fitness journey</p>
+          <p className="text-orange-200/70 mt-1">Advanced performance monitoring and analysis</p>
         </div>
       </header>
 
@@ -19,10 +19,10 @@ const Index = () => {
       <main className="max-w-7xl mx-auto px-6 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 h-[calc(100vh-200px)]">
           {/* Left Section - 3D Model */}
-          <div className="bg-gray-800/50 rounded-2xl border border-gray-700/50 backdrop-blur-sm overflow-hidden">
-            <div className="p-6 border-b border-gray-700/50">
-              <h2 className="text-xl font-semibold text-white">3D Body Model</h2>
-              <p className="text-gray-400 text-sm mt-1">Interactive wireframe visualization</p>
+          <div className="bg-slate-900/60 rounded-2xl border border-orange-500/30 backdrop-blur-sm overflow-hidden shadow-2xl shadow-orange-500/10">
+            <div className="p-6 border-b border-orange-500/30">
+              <h2 className="text-xl font-semibold text-orange-100">Biometric Analysis</h2>
+              <p className="text-orange-200/60 text-sm mt-1">3D anatomical performance mapping</p>
             </div>
             <div className="h-full">
               <FitnessModel />
@@ -30,10 +30,10 @@ const Index = () => {
           </div>
 
           {/* Right Section - Stats */}
-          <div className="bg-gray-800/50 rounded-2xl border border-gray-700/50 backdrop-blur-sm">
-            <div className="p-6 border-b border-gray-700/50">
-              <h2 className="text-xl font-semibold text-white">Performance Stats</h2>
-              <p className="text-gray-400 text-sm mt-1">Your fitness metrics and achievements</p>
+          <div className="bg-slate-900/60 rounded-2xl border border-orange-500/30 backdrop-blur-sm shadow-2xl shadow-orange-500/10">
+            <div className="p-6 border-b border-orange-500/30">
+              <h2 className="text-xl font-semibold text-orange-100">Performance Metrics</h2>
+              <p className="text-orange-200/60 text-sm mt-1">Real-time capability assessment</p>
             </div>
             <div className="p-6">
               <StatsPanel />
