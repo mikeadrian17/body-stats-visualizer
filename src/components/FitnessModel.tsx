@@ -29,162 +29,175 @@ export const FitnessModel = () => {
       const rect = canvas.parentElement?.getBoundingClientRect();
       if (rect) {
         canvas.width = rect.width;
-        canvas.height = rect.height - 40; // Account for controls text
+        canvas.height = rect.height - 40;
       }
     };
 
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // Detailed wireframe human body points (based on reference image)
+    // Realistic male human body wireframe points
     const bodyPoints = {
-      // Head
-      headTop: { x: 0, y: -120 },
-      headFrontTop: { x: 0, y: -115 },
-      headFrontBottom: { x: 0, y: -95 },
-      headLeft: { x: -12, y: -107 },
-      headRight: { x: 12, y: -107 },
-      chin: { x: 0, y: -85 },
+      // Head (more defined male structure)
+      headTop: { x: 0, y: -130, z: 0 },
+      headFront: { x: 0, y: -115, z: 12 },
+      headBack: { x: 0, y: -115, z: -12 },
+      headLeftSide: { x: -12, y: -115, z: 0 },
+      headRightSide: { x: 12, y: -115, z: 0 },
+      jawLeft: { x: -8, y: -95, z: 8 },
+      jawRight: { x: 8, y: -95, z: 8 },
+      chin: { x: 0, y: -90, z: 10 },
       
-      // Neck
-      neckTop: { x: 0, y: -85 },
-      neckBottom: { x: 0, y: -75 },
+      // Neck (broader male neck)
+      neckTop: { x: 0, y: -85, z: 0 },
+      neckBottom: { x: 0, y: -75, z: 0 },
+      neckLeft: { x: -6, y: -80, z: 0 },
+      neckRight: { x: 6, y: -80, z: 0 },
       
-      // Shoulders
-      leftShoulder: { x: -35, y: -70 },
-      rightShoulder: { x: 35, y: -70 },
-      leftShoulderBack: { x: -30, y: -68 },
-      rightShoulderBack: { x: 30, y: -68 },
+      // Shoulders (wider male shoulders)
+      leftShoulder: { x: -38, y: -70, z: 0 },
+      rightShoulder: { x: 38, y: -70, z: 0 },
+      leftShoulderBack: { x: -35, y: -68, z: -8 },
+      rightShoulderBack: { x: 35, y: -68, z: -8 },
+      leftShoulderFront: { x: -35, y: -68, z: 8 },
+      rightShoulderFront: { x: 35, y: -68, z: 8 },
       
-      // Arms
-      leftUpperArm: { x: -45, y: -45 },
-      rightUpperArm: { x: 45, y: -45 },
-      leftElbow: { x: -50, y: -20 },
-      rightElbow: { x: 50, y: -20 },
-      leftForearm: { x: -45, y: 5 },
-      rightForearm: { x: 45, y: 5 },
-      leftHand: { x: -40, y: 25 },
-      rightHand: { x: 40, y: 25 },
+      // Arms (muscular definition)
+      leftUpperArm: { x: -50, y: -45, z: 0 },
+      rightUpperArm: { x: 50, y: -45, z: 0 },
+      leftElbow: { x: -55, y: -20, z: 0 },
+      rightElbow: { x: 55, y: -20, z: 0 },
+      leftForearm: { x: -50, y: 5, z: 0 },
+      rightForearm: { x: 50, y: 5, z: 0 },
+      leftWrist: { x: -45, y: 25, z: 0 },
+      rightWrist: { x: 45, y: 25, z: 0 },
+      leftHand: { x: -42, y: 35, z: 0 },
+      rightHand: { x: 42, y: 35, z: 0 },
       
-      // Torso
-      chestCenter: { x: 0, y: -55 },
-      leftChest: { x: -20, y: -55 },
-      rightChest: { x: 20, y: -55 },
-      leftRib: { x: -25, y: -35 },
-      rightRib: { x: 25, y: -35 },
-      waistCenter: { x: 0, y: -10 },
-      leftWaist: { x: -18, y: -10 },
-      rightWaist: { x: 18, y: -10 },
+      // Chest (defined pectorals)
+      chestCenter: { x: 0, y: -55, z: 5 },
+      leftChest: { x: -18, y: -55, z: 8 },
+      rightChest: { x: 18, y: -55, z: 8 },
+      leftPec: { x: -25, y: -60, z: 5 },
+      rightPec: { x: 25, y: -60, z: 5 },
       
-      // Abs (for bench press visualization)
-      upperAbs: { x: 0, y: -45 },
-      midAbs: { x: 0, y: -30 },
-      lowerAbs: { x: 0, y: -15 },
+      // Torso (V-taper male physique)
+      leftRib: { x: -28, y: -35, z: 0 },
+      rightRib: { x: 28, y: -35, z: 0 },
+      leftWaist: { x: -20, y: -10, z: 0 },
+      rightWaist: { x: 20, y: -10, z: 0 },
+      waistCenter: { x: 0, y: -10, z: 0 },
       
-      // Hips
-      leftHip: { x: -15, y: 10 },
-      rightHip: { x: 15, y: 10 },
+      // Abs (six-pack definition)
+      upperAbsLeft: { x: -8, y: -45, z: 8 },
+      upperAbsRight: { x: 8, y: -45, z: 8 },
+      midAbsLeft: { x: -8, y: -30, z: 8 },
+      midAbsRight: { x: 8, y: -30, z: 8 },
+      lowerAbsLeft: { x: -8, y: -15, z: 8 },
+      lowerAbsRight: { x: 8, y: -15, z: 8 },
       
-      // Legs (for squat/deadlift visualization)
-      leftUpperLeg: { x: -18, y: 35 },
-      rightUpperLeg: { x: 18, y: 35 },
-      leftKnee: { x: -20, y: 65 },
-      rightKnee: { x: 20, y: 65 },
-      leftLowerLeg: { x: -18, y: 90 },
-      rightLowerLeg: { x: 18, y: 90 },
-      leftFoot: { x: -20, y: 115 },
-      rightFoot: { x: 20, y: 115 },
+      // Back (latissimus dorsi and trapezius)
+      leftTrap: { x: -15, y: -65, z: -8 },
+      rightTrap: { x: 15, y: -65, z: -8 },
+      leftLat: { x: -35, y: -40, z: -5 },
+      rightLat: { x: 35, y: -40, z: -5 },
+      leftBackLower: { x: -25, y: -20, z: -5 },
+      rightBackLower: { x: 25, y: -20, z: -5 },
+      spineUpper: { x: 0, y: -50, z: -8 },
+      spineMid: { x: 0, y: -30, z: -8 },
+      spineLower: { x: 0, y: -10, z: -8 },
       
-      // Back muscles (for deadlift)
-      leftBackUpper: { x: -25, y: -50 },
-      rightBackUpper: { x: 25, y: -50 },
-      leftBackLower: { x: -20, y: -20 },
-      rightBackLower: { x: 20, y: -20 },
+      // Hips (male hip structure)
+      leftHip: { x: -18, y: 10, z: 0 },
+      rightHip: { x: 18, y: 10, z: 0 },
+      hipCenter: { x: 0, y: 10, z: 0 },
+      
+      // Legs (muscular male legs)
+      leftUpperLeg: { x: -20, y: 35, z: 0 },
+      rightUpperLeg: { x: 20, y: 35, z: 0 },
+      leftQuad: { x: -22, y: 45, z: 5 },
+      rightQuad: { x: 22, y: 45, z: 5 },
+      leftHamstring: { x: -18, y: 45, z: -5 },
+      rightHamstring: { x: 18, y: 45, z: -5 },
+      leftKnee: { x: -22, y: 70, z: 0 },
+      rightKnee: { x: 22, y: 70, z: 0 },
+      leftCalf: { x: -20, y: 95, z: -2 },
+      rightCalf: { x: 20, y: 95, z: -2 },
+      leftShin: { x: -22, y: 95, z: 2 },
+      rightShin: { x: 22, y: 95, z: 2 },
+      leftAnkle: { x: -20, y: 120, z: 0 },
+      rightAnkle: { x: 20, y: 120, z: 0 },
+      leftFoot: { x: -20, y: 125, z: 8 },
+      rightFoot: { x: 20, y: 125, z: 8 },
     };
 
-    // Enhanced connections for detailed wireframe
+    // Realistic human body connections
     const connections = [
       // Head structure
-      ['headTop', 'headLeft'],
-      ['headTop', 'headRight'],
-      ['headLeft', 'chin'],
-      ['headRight', 'chin'],
-      ['headFrontTop', 'headFrontBottom'],
-      ['chin', 'neckTop'],
+      ['headTop', 'headLeftSide'], ['headTop', 'headRightSide'],
+      ['headLeftSide', 'jawLeft'], ['headRightSide', 'jawRight'],
+      ['jawLeft', 'chin'], ['jawRight', 'chin'],
+      ['headFront', 'chin'], ['headBack', 'neckTop'],
       
-      // Neck to shoulders
-      ['neckTop', 'neckBottom'],
-      ['neckBottom', 'leftShoulder'],
-      ['neckBottom', 'rightShoulder'],
-      ['neckBottom', 'chestCenter'],
+      // Neck
+      ['chin', 'neckTop'], ['neckTop', 'neckBottom'],
+      ['neckLeft', 'neckRight'], ['neckBottom', 'chestCenter'],
       
-      // Shoulder structure
-      ['leftShoulder', 'leftShoulderBack'],
-      ['rightShoulder', 'rightShoulderBack'],
-      ['leftShoulder', 'leftChest'],
-      ['rightShoulder', 'rightChest'],
+      // Shoulders and arms
+      ['neckBottom', 'leftShoulder'], ['neckBottom', 'rightShoulder'],
+      ['leftShoulder', 'leftShoulderBack'], ['leftShoulder', 'leftShoulderFront'],
+      ['rightShoulder', 'rightShoulderBack'], ['rightShoulder', 'rightShoulderFront'],
+      ['leftShoulder', 'leftUpperArm'], ['rightShoulder', 'rightUpperArm'],
+      ['leftUpperArm', 'leftElbow'], ['rightUpperArm', 'rightElbow'],
+      ['leftElbow', 'leftForearm'], ['rightElbow', 'rightForearm'],
+      ['leftForearm', 'leftWrist'], ['rightForearm', 'rightWrist'],
+      ['leftWrist', 'leftHand'], ['rightWrist', 'rightHand'],
       
-      // Arms
-      ['leftShoulder', 'leftUpperArm'],
-      ['rightShoulder', 'rightUpperArm'],
-      ['leftUpperArm', 'leftElbow'],
-      ['rightUpperArm', 'rightElbow'],
-      ['leftElbow', 'leftForearm'],
-      ['rightElbow', 'rightForearm'],
-      ['leftForearm', 'leftHand'],
-      ['rightForearm', 'rightHand'],
-      
-      // Torso structure
-      ['chestCenter', 'leftChest'],
-      ['chestCenter', 'rightChest'],
-      ['leftChest', 'leftRib'],
-      ['rightChest', 'rightRib'],
-      ['leftRib', 'leftWaist'],
-      ['rightRib', 'rightWaist'],
-      ['leftWaist', 'waistCenter'],
-      ['rightWaist', 'waistCenter'],
+      // Chest and torso
+      ['leftShoulder', 'leftPec'], ['rightShoulder', 'rightPec'],
+      ['leftPec', 'leftChest'], ['rightPec', 'rightChest'],
+      ['leftChest', 'chestCenter'], ['rightChest', 'chestCenter'],
+      ['leftChest', 'leftRib'], ['rightChest', 'rightRib'],
+      ['leftRib', 'leftWaist'], ['rightRib', 'rightWaist'],
+      ['leftWaist', 'waistCenter'], ['rightWaist', 'waistCenter'],
       
       // Abs definition
-      ['chestCenter', 'upperAbs'],
-      ['upperAbs', 'midAbs'],
-      ['midAbs', 'lowerAbs'],
-      ['lowerAbs', 'waistCenter'],
-      
-      // Hips
-      ['waistCenter', 'leftHip'],
-      ['waistCenter', 'rightHip'],
-      ['leftWaist', 'leftHip'],
-      ['rightWaist', 'rightHip'],
-      
-      // Legs
-      ['leftHip', 'leftUpperLeg'],
-      ['rightHip', 'rightUpperLeg'],
-      ['leftUpperLeg', 'leftKnee'],
-      ['rightUpperLeg', 'rightKnee'],
-      ['leftKnee', 'leftLowerLeg'],
-      ['rightKnee', 'rightLowerLeg'],
-      ['leftLowerLeg', 'leftFoot'],
-      ['rightLowerLeg', 'rightFoot'],
+      ['chestCenter', 'upperAbsLeft'], ['chestCenter', 'upperAbsRight'],
+      ['upperAbsLeft', 'midAbsLeft'], ['upperAbsRight', 'midAbsRight'],
+      ['midAbsLeft', 'lowerAbsLeft'], ['midAbsRight', 'lowerAbsRight'],
+      ['upperAbsLeft', 'upperAbsRight'], ['midAbsLeft', 'midAbsRight'],
+      ['lowerAbsLeft', 'lowerAbsRight'], ['lowerAbsLeft', 'waistCenter'],
+      ['lowerAbsRight', 'waistCenter'],
       
       // Back structure
-      ['leftShoulderBack', 'leftBackUpper'],
-      ['rightShoulderBack', 'rightBackUpper'],
-      ['leftBackUpper', 'leftBackLower'],
-      ['rightBackUpper', 'rightBackLower'],
-      ['leftBackLower', 'leftHip'],
-      ['rightBackLower', 'rightHip'],
+      ['neckTop', 'leftTrap'], ['neckTop', 'rightTrap'],
+      ['leftTrap', 'spineUpper'], ['rightTrap', 'spineUpper'],
+      ['leftShoulderBack', 'leftLat'], ['rightShoulderBack', 'rightLat'],
+      ['leftLat', 'leftBackLower'], ['rightLat', 'rightBackLower'],
+      ['spineUpper', 'spineMid'], ['spineMid', 'spineLower'],
+      ['leftBackLower', 'spineLower'], ['rightBackLower', 'spineLower'],
       
-      // Cross connections for grid pattern
-      ['leftChest', 'rightRib'],
-      ['rightChest', 'leftRib'],
-      ['leftRib', 'rightWaist'],
-      ['rightRib', 'leftWaist'],
+      // Hips and legs
+      ['waistCenter', 'hipCenter'], ['leftWaist', 'leftHip'], ['rightWaist', 'rightHip'],
+      ['leftHip', 'leftUpperLeg'], ['rightHip', 'rightUpperLeg'],
+      ['leftUpperLeg', 'leftQuad'], ['rightUpperLeg', 'rightQuad'],
+      ['leftUpperLeg', 'leftHamstring'], ['rightUpperLeg', 'rightHamstring'],
+      ['leftQuad', 'leftKnee'], ['rightQuad', 'rightKnee'],
+      ['leftHamstring', 'leftKnee'], ['rightHamstring', 'rightKnee'],
+      ['leftKnee', 'leftCalf'], ['rightKnee', 'rightCalf'],
+      ['leftKnee', 'leftShin'], ['rightKnee', 'rightShin'],
+      ['leftCalf', 'leftAnkle'], ['rightCalf', 'rightAnkle'],
+      ['leftShin', 'leftAnkle'], ['rightShin', 'rightAnkle'],
+      ['leftAnkle', 'leftFoot'], ['rightAnkle', 'rightFoot'],
+      
+      // Cross connections for structural integrity
+      ['leftChest', 'rightRib'], ['rightChest', 'leftRib'],
+      ['leftRib', 'rightWaist'], ['rightRib', 'leftWaist'],
     ];
 
-    let rotationX = 0;
     let rotationY = 0;
+    let rotationX = 0;
     let scale = 1;
-    let autoRotate = true;
 
     // Mouse interaction
     let isDragging = false;
@@ -193,7 +206,6 @@ export const FitnessModel = () => {
 
     canvas.addEventListener('mousedown', (e) => {
       isDragging = true;
-      autoRotate = false;
       lastMouseX = e.clientX;
       lastMouseY = e.clientY;
       canvas.style.cursor = 'grabbing';
@@ -218,7 +230,6 @@ export const FitnessModel = () => {
     canvas.addEventListener('mouseup', () => {
       isDragging = false;
       canvas.style.cursor = 'grab';
-      setTimeout(() => { autoRotate = true; }, 3000);
     });
 
     canvas.addEventListener('mouseleave', () => {
@@ -229,24 +240,20 @@ export const FitnessModel = () => {
     canvas.addEventListener('wheel', (e) => {
       e.preventDefault();
       scale += e.deltaY * -0.001;
-      scale = Math.max(0.3, Math.min(2, scale));
+      scale = Math.max(0.5, Math.min(2.5, scale));
     });
 
     // Get muscle group color based on stats
     const getMuscleColor = (muscleGroup: keyof FitnessStats) => {
       const percentage = stats[muscleGroup];
-      if (percentage >= 85) return '#00ff00'; // Green for high performance
-      if (percentage >= 70) return '#ffff00'; // Yellow for medium
-      if (percentage >= 50) return '#ff8800'; // Orange for low
-      return '#ff0000'; // Red for very low
+      if (percentage >= 85) return '#00ff00';
+      if (percentage >= 70) return '#ffff00';
+      if (percentage >= 50) return '#ff8800';
+      return '#ff0000';
     };
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      if (autoRotate && !isDragging) {
-        rotationY += 0.003;
-      }
 
       const centerX = canvas.width / 2;
       const centerY = canvas.height / 2;
@@ -256,8 +263,8 @@ export const FitnessModel = () => {
       
       Object.entries(bodyPoints).forEach(([key, point]) => {
         // Apply Y rotation (horizontal spinning)
-        let x = point.x * Math.cos(rotationY) - 0 * Math.sin(rotationY);
-        let z = point.x * Math.sin(rotationY) + 0 * Math.cos(rotationY);
+        let x = point.x * Math.cos(rotationY) - point.z * Math.sin(rotationY);
+        let z = point.x * Math.sin(rotationY) + point.z * Math.cos(rotationY);
         let y = point.y;
         
         // Apply X rotation (vertical tilting)
@@ -266,17 +273,17 @@ export const FitnessModel = () => {
         y = newY;
         
         transformedPoints[key] = {
-          x: centerX + x * scale * 1.5,
-          y: centerY + y * scale * 1.5,
+          x: centerX + x * scale * 1.2,
+          y: centerY + y * scale * 1.2,
           z: z
         };
       });
 
-      // Sort points by Z depth for proper rendering
+      // Sort connections by Z depth for proper rendering
       const sortedConnections = [...connections].sort((a, b) => {
         const avgZA = (transformedPoints[a[0]].z + transformedPoints[a[1]].z) / 2;
         const avgZB = (transformedPoints[b[0]].z + transformedPoints[b[1]].z) / 2;
-        return avgZB - avgZA; // Draw far things first
+        return avgZB - avgZA;
       });
 
       // Draw connections with stat-based coloring
@@ -285,34 +292,32 @@ export const FitnessModel = () => {
         const toPoint = transformedPoints[to];
         
         // Determine color based on muscle group
-        let color = '#60a5fa'; // Default blue
+        let color = '#60a5fa';
         let lineWidth = 1.5;
         
         // Chest/arms (bench press)
-        if (['leftChest', 'rightChest', 'chestCenter', 'upperAbs', 'leftUpperArm', 'rightUpperArm'].some(p => from.includes(p) || to.includes(p))) {
+        if (['Chest', 'Pec', 'upperAbs', 'UpperArm'].some(p => from.includes(p) || to.includes(p))) {
           color = getMuscleColor('benchPress');
           lineWidth = 2;
         }
         // Legs (squat)
-        else if (['leftUpperLeg', 'rightUpperLeg', 'leftKnee', 'rightKnee', 'leftLowerLeg', 'rightLowerLeg'].some(p => from.includes(p) || to.includes(p))) {
+        else if (['Leg', 'Quad', 'Hamstring', 'Knee', 'Calf'].some(p => from.includes(p) || to.includes(p))) {
           color = getMuscleColor('squat');
           lineWidth = 2;
         }
         // Back (deadlift)
-        else if (['leftBackUpper', 'rightBackUpper', 'leftBackLower', 'rightBackLower'].some(p => from.includes(p) || to.includes(p))) {
+        else if (['Back', 'Lat', 'Trap', 'spine'].some(p => from.includes(p) || to.includes(p))) {
           color = getMuscleColor('deadlift');
           lineWidth = 2;
         }
         
         // Calculate depth-based opacity
         const avgZ = (fromPoint.z + toPoint.z) / 2;
-        const opacity = Math.max(0.3, 1 - Math.abs(avgZ) * 0.01);
+        const opacity = Math.max(0.4, 1 - Math.abs(avgZ) * 0.008);
         
         ctx.strokeStyle = color;
         ctx.lineWidth = lineWidth;
         ctx.globalAlpha = opacity;
-        ctx.shadowColor = color;
-        ctx.shadowBlur = 5;
 
         ctx.beginPath();
         ctx.moveTo(fromPoint.x, fromPoint.y);
@@ -322,41 +327,30 @@ export const FitnessModel = () => {
 
       // Draw points
       ctx.globalAlpha = 1;
-      ctx.shadowBlur = 8;
       Object.entries(transformedPoints).forEach(([key, point]) => {
         let color = '#60a5fa';
         let size = 2;
         
         // Highlight key muscle groups
-        if (['leftChest', 'rightChest', 'chestCenter'].includes(key)) {
+        if (['Chest', 'Pec'].some(p => key.includes(p))) {
           color = getMuscleColor('benchPress');
           size = 3;
-        } else if (['leftKnee', 'rightKnee', 'leftUpperLeg', 'rightUpperLeg'].includes(key)) {
+        } else if (['Quad', 'Hamstring', 'Knee'].some(p => key.includes(p))) {
           color = getMuscleColor('squat');
           size = 3;
-        } else if (['leftBackUpper', 'rightBackUpper'].includes(key)) {
+        } else if (['Back', 'Lat', 'Trap'].some(p => key.includes(p))) {
           color = getMuscleColor('deadlift');
           size = 3;
         }
         
-        const opacity = Math.max(0.5, 1 - Math.abs(point.z) * 0.01);
+        const opacity = Math.max(0.6, 1 - Math.abs(point.z) * 0.008);
         ctx.globalAlpha = opacity;
         
         ctx.beginPath();
         ctx.arc(point.x, point.y, size, 0, Math.PI * 2);
         ctx.fillStyle = color;
-        ctx.shadowColor = color;
         ctx.fill();
       });
-
-      // Draw head wireframe
-      const headPoint = transformedPoints['headTop'];
-      ctx.globalAlpha = Math.max(0.5, 1 - Math.abs(headPoint.z) * 0.01);
-      ctx.strokeStyle = '#60a5fa';
-      ctx.lineWidth = 1.5;
-      ctx.beginPath();
-      ctx.arc(headPoint.x, headPoint.y + 15, 18 * scale, 0, Math.PI * 2);
-      ctx.stroke();
 
       requestAnimationFrame(animate);
     };
@@ -375,7 +369,7 @@ export const FitnessModel = () => {
         className="w-full h-full cursor-grab active:cursor-grabbing"
       />
       <div className="absolute bottom-4 left-4 text-xs text-gray-400">
-        <p>Drag to rotate • Scroll to zoom • Colors show performance</p>
+        <p>Drag to rotate 360° • Scroll to zoom • Colors show performance</p>
       </div>
       <div className="absolute top-4 right-4 text-xs text-gray-400">
         <div className="flex flex-col gap-1">
